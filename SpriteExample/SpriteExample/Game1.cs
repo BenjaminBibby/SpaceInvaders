@@ -15,7 +15,13 @@ namespace SpriteExample
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Enemy enemy;
+
+        private static List<SpriteObject> tmpObjects = new List<SpriteObject>();
+        internal static List<SpriteObject> TmpObjects
+        {
+            get { return Game1.tmpObjects; }
+            set { Game1.tmpObjects = value; }
+        }
 
         private static List<SpriteObject> allObjects = new List<SpriteObject>();
         internal static List<SpriteObject> AllObjects
@@ -54,9 +60,8 @@ namespace SpriteExample
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            enemy = new Enemy(new Vector2(0, 0),"E1");
 
-            allObjects.Add(enemy);
+            allObjects.Add(new Enemy(new Vector2(0, 0), "E1"));
             allObjects.Add(Player.Instance);
 
             foreach (SpriteObject obj in allObjects)
@@ -88,10 +93,13 @@ namespace SpriteExample
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            tmpObjects = allObjects;
+
             // TODO: Add your update logic here
-            for (int i = 0; i < allObjects.Count; i++)
+            foreach(SpriteObject obj in tmpObjects)
             {
-                allObjects[i].Update(gameTime);
+                obj.LoadContent(Content);
+                obj.Update(gameTime);
             }
 
             base.Update(gameTime);
@@ -109,9 +117,9 @@ namespace SpriteExample
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
 
-            for (int i = 0; i < allObjects.Count; i++)
+            foreach(SpriteObject obj in tmpObjects)
             {
-                allObjects[i].Draw(spriteBatch);
+                obj.Draw(spriteBatch);
             }
 
             spriteBatch.End();
