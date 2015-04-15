@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.GamerServices;
+
 namespace SpriteExample
 {
     class Animation
@@ -52,7 +54,7 @@ namespace SpriteExample
 
                 rectangles[i] = new Rectangle((i + xStartFrame) * width, yPos, width, height);
 
-                texture.GetData<Color>(0, rectangles[i], colors[i], 0, width * height);
+                //texture.GetData<Color>(0, rectangles[i], colors[i], 0, width * height);
             }
 
             this.fps = fps;

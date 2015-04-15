@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.GamerServices;
 
 namespace SpriteExample
 {
@@ -14,7 +15,6 @@ namespace SpriteExample
     {
         private Vector2 origin;
         private float layer;
-        private float scale;
         protected Color color;
         private Rectangle rectangle;
         private Rectangle collisionRect;
@@ -25,6 +25,7 @@ namespace SpriteExample
         private Dictionary<string, Animation> animations;
         private Texture2D boxTexture;
 
+        protected float scale;
         protected SpriteEffects effect;
         protected Texture2D texture;
         private Vector2 position;

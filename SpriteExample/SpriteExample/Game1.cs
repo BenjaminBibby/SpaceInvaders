@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.GamerServices;
 #endregion
 
 namespace SpriteExample
@@ -29,6 +30,7 @@ namespace SpriteExample
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferHeight = 675;
             Content.RootDirectory = "Content";
         }
 
@@ -54,12 +56,15 @@ namespace SpriteExample
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            Player.Instance.LoadContent(Content);
-            enemy = new Enemy(new Vector2(0, 0));
-            enemy.LoadContent(Content);
+            enemy = new Enemy(new Vector2(0, 0),"E1");
 
             allObjects.Add(enemy);
             allObjects.Add(Player.Instance);
+
+            foreach (SpriteObject obj in allObjects)
+            {
+                obj.LoadContent(Content);
+            }
 
             // TODO: use this.Content to load your game content here
 
@@ -85,9 +90,10 @@ namespace SpriteExample
                 Exit();
 
             // TODO: Add your update logic here
-            Player.Instance.Update(gameTime);
-            enemy.Update(gameTime);
-
+            for (int i = 0; i < allObjects.Count; i++)
+            {
+                allObjects[i].Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
@@ -99,12 +105,15 @@ namespace SpriteExample
         protected override void Draw(GameTime gameTime)
         {
 
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
-            Player.Instance.Draw(spriteBatch);
-            enemy.Draw(spriteBatch);
+
+            for (int i = 0; i < allObjects.Count; i++)
+            {
+                allObjects[i].Draw(spriteBatch);
+            }
 
             spriteBatch.End();
 
