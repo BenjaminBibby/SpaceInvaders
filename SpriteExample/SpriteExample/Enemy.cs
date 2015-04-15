@@ -20,6 +20,7 @@ namespace SpriteExample
 
         public Enemy(Vector2 position, string type) : base(position)
         {
+            CreateAnimation("MoveRight", 5, 0, 0, 65, 65, new Vector2(0, 0), 5);
             isColliding = false;
             this.type = type;
 
@@ -36,9 +37,7 @@ namespace SpriteExample
         public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>(@"sponge");
-
-            CreateAnimation("MoveRight", 5, 0, 0, 65, 65, new Vector2(0, 0), 5);
-
+            
             base.LoadContent(content);
         }
 

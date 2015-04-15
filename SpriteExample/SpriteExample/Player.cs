@@ -10,12 +10,8 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace SpriteExample
 {
-    enum Direction { Up, Down, Right, Left};
-
     class Player : SpriteObject
     {
-        private Direction dir;
-        private bool attack;
         private static Player instance;
 
         internal static Player Instance
@@ -39,13 +35,12 @@ namespace SpriteExample
         {
             this.Position = new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width/2 - 26), 625);
             this.speed = 250;
-            attack = false;
-            dir = Direction.Down;
         }
 
         public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>(@"SpaceInvader");
+
 
             CreateAnimation("Player", 1, 0, 0, texture.Width, texture.Height, Vector2.Zero, 0);
 
@@ -58,11 +53,8 @@ namespace SpriteExample
 
             velocity = Vector2.Zero;
 
-            if(attack == false)
-            {
-                HandleInput(Keyboard.GetState());
-            }
-            
+            HandleInput(Keyboard.GetState());
+                        
             velocity *= speed;
 
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -76,20 +68,15 @@ namespace SpriteExample
         {           
             if (keyState.IsKeyDown(Keys.A) && this.Position.X - velocity.X > 0)
             {
-                dir = Direction.Left;
                 velocity += new Vector2(-1, 0);
             }
             if (keyState.IsKeyDown(Keys.D) && this.Position.X + velocity.X + this.CollisionRect.Width < GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width)
             {
-                dir = Direction.Right;
                 velocity += new Vector2(1, 0);
             }
             if(keyState.IsKeyDown(Keys.Space))
             {
-                currentIndex = 0;
-                timeElapsed = 0;
-                Attack();
-                attack = true;
+                new Laser(Orientation.UP, "LaserSprite", this.Position);
             }
         }
 
@@ -100,7 +87,6 @@ namespace SpriteExample
 
         protected override void AnimationRestart()
         {
-            attack = false;
         }
 
         protected override void OnCollision(SpriteObject other)

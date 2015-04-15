@@ -16,18 +16,12 @@ namespace SpriteExample
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Enemy enemy;
+
         private static List<SpriteObject> allObjects = new List<SpriteObject>();
         internal static List<SpriteObject> AllObjects
         {
             get { return allObjects; }
             set { allObjects = value; }
-        }
-        private static List<SpriteObject> tmpObjects = new List<SpriteObject>();
-
-        internal static List<SpriteObject> TmpObjects
-        {
-            get { return Game1.tmpObjects; }
-            set { Game1.tmpObjects = value; }
         }
 
         public Game1()
@@ -67,7 +61,7 @@ namespace SpriteExample
 
             foreach (SpriteObject obj in allObjects)
             {
-                obj.LoadContent(Content);
+                 obj.LoadContent(Content);
             }
 
             // TODO: use this.Content to load your game content here
