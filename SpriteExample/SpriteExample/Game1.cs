@@ -1,12 +1,10 @@
-﻿#region Using Statements
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
-#endregion
 
 namespace SpriteExample
 {
@@ -23,6 +21,13 @@ namespace SpriteExample
         {
             get { return allObjects; }
             set { allObjects = value; }
+        }
+        private static List<SpriteObject> tmpObjects = new List<SpriteObject>();
+
+        internal static List<SpriteObject> TmpObjects
+        {
+            get { return Game1.tmpObjects; }
+            set { Game1.tmpObjects = value; }
         }
 
         public Game1()
@@ -81,6 +86,7 @@ namespace SpriteExample
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            //TmpObjects = AllObjects
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
