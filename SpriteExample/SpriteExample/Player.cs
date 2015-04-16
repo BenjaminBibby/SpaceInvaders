@@ -76,7 +76,7 @@ namespace SpriteExample
             }
             if(keyState.IsKeyDown(Keys.Space))
             {
-                new Laser(Orientation.UP, "LaserSprite", this.Position);
+                Game1.AllObjects.Add(new Laser(Orientation.UP, "LaserSprite", this.Position));
             }
         }
 
