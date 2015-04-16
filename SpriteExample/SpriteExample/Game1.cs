@@ -59,9 +59,9 @@ namespace SpriteExample
             allObjects.Add(enemy);
             allObjects.Add(Player.Instance);
 
-            foreach (SpriteObject obj in allObjects)
+            for (int i = 0; i < allObjects.Count; i++)
             {
-                 obj.LoadContent(Content);
+                allObjects[i].LoadContent(Content);
             }
 
             // TODO: use this.Content to load your game content here

@@ -27,7 +27,7 @@ namespace SpriteExample
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>(@"" + imgPath);
+            texture = content.Load<Texture2D>(@"LaserSprite");
             
             base.LoadContent(content);
         }
