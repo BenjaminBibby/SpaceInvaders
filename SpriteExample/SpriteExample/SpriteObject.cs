@@ -83,16 +83,19 @@ namespace SpriteExample
             Rectangle rightLine = new Rectangle(CollisionRect.X + CollisionRect.Width, CollisionRect.Y, 1, CollisionRect.Height);
             Rectangle leftLine = new Rectangle(CollisionRect.X, CollisionRect.Y, 1, CollisionRect.Height);
 
+#if DEBUG
             spriteBatch.Draw(boxTexture, topLine, Color.Red);
             spriteBatch.Draw(boxTexture, bottomLine, Color.Red);
             spriteBatch.Draw(boxTexture, rightLine, Color.Red);
             spriteBatch.Draw(boxTexture, leftLine, Color.Red);
+#endif
         }
 
         public virtual void Update(GameTime gameTime)
         {
             timeElapsed += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            if(animations[currentAnimation].Fps != 0)
             currentIndex = (int)(timeElapsed * animationSpeed);
 
             PlayAnimation(currentAnimation);

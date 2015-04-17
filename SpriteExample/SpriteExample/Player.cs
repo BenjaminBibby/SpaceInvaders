@@ -12,6 +12,13 @@ namespace SpriteExample
 {
     class Player : SpriteObject
     {
+        private int lives = 3;
+                public int Lives
+        {
+            get { return lives; }
+            set { lives = value; }
+        }
+
         private static Player instance;
 
         internal static Player Instance
@@ -78,6 +85,7 @@ namespace SpriteExample
             {
                 new Laser(Orientation.UP, "LaserSprite", this.Position);
                 //new Laser(new Vector2(50, 50), "LaserSprite");
+                this.lives = 2;
             }
         }
 
