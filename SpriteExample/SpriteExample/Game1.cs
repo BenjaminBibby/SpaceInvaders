@@ -15,13 +15,10 @@ namespace SpriteExample
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Enemy enemy;
+        Shield shield;
 
-        private static List<SpriteObject> tmpObjects = new List<SpriteObject>();
-        internal static List<SpriteObject> TmpObjects
-        {
-            get { return Game1.tmpObjects; }
-            set { Game1.tmpObjects = value; }
-        }
+        private Texture2D lives;
 
         private static List<SpriteObject> allObjects = new List<SpriteObject>();
         internal static List<SpriteObject> AllObjects
@@ -35,6 +32,7 @@ namespace SpriteExample
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 675;
+            Window.Title = "Space Invaders";
             Content.RootDirectory = "Content";
         }
 
@@ -60,9 +58,32 @@ namespace SpriteExample
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            enemy = new Enemy(new Vector2(0, 0),"UFO");
+            lives = Content.Load<Texture2D>("SpaceInvader");
+            shield = new Shield(new Vector2(100, 200),1);
 
-            allObjects.Add(new Enemy(new Vector2(0, 0), "E1"));
+            for (int i = 1; i < 9; i++)
+            {
+               
+                if(i < 3)
+                allObjects.Add(new Enemy(new Vector2(i * 60, 0), "e1"));
+
+                if (i >= 3 && i < 6)
+                allObjects.Add(new Enemy(new Vector2(i * 60, 45), "e2"));
+
+                if(i < 9 && i >= 6)
+                allObjects.Add(new Enemy(new Vector2(i * 60, 90), "e3"));
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                allObjects.Add(new Shield(new Vector2(50 + i * 32), i));
+            }
+
+            allObjects.Add(enemy);
             allObjects.Add(Player.Instance);
+
+
 
             for (int i = 0; i < allObjects.Count; i++)
             {
@@ -93,13 +114,10 @@ namespace SpriteExample
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            tmpObjects = allObjects;
-
             // TODO: Add your update logic here
-            foreach(SpriteObject obj in tmpObjects)
+            for (int i = 0; i < allObjects.Count; i++)
             {
-                obj.LoadContent(Content);
-                obj.Update(gameTime);
+                allObjects[i].Update(gameTime);
             }
 
             base.Update(gameTime);
@@ -116,10 +134,14 @@ namespace SpriteExample
 
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
 
-
-            foreach(SpriteObject obj in tmpObjects)
+            for (int i = 0; i < Player.Instance.Lives; i++)
             {
-                obj.Draw(spriteBatch);
+                spriteBatch.Draw(lives, new Rectangle(575 + (i * 75), 10, 52, 32), Color.White);                
+            }
+
+            for (int i = 0; i < allObjects.Count; i++)
+            {
+                allObjects[i].Draw(spriteBatch);
             }
 
             spriteBatch.End();
