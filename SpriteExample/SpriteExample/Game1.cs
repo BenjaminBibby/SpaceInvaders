@@ -66,7 +66,6 @@ namespace SpriteExample
             new Enemy(new Vector2(0, 0), "E1");
             Player player = Player.Instance;
             lives = Content.Load<Texture2D>("SpaceInvader");
-            shield = new Shield(new Vector2(100, 200), 1);
 
             for (int i = 1; i < 9; i++)
             {
@@ -102,27 +101,7 @@ namespace SpriteExample
             // Create a new SpriteBatch, which can be used to draw textures.
             if(spriteBatch == null)
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            lives = Content.Load<Texture2D>("SpaceInvader");
-
-            for (int i = 1; i < 9; i++)
-            {
-               
-                if(i < 3)
-                allObjects.Add(new Enemy(new Vector2(i * 60, 0), "e1"));
-
-                if (i >= 3 && i < 6)
-                allObjects.Add(new Enemy(new Vector2(i * 60, 45), "e2"));
-
-                if(i < 9 && i >= 6)
-                allObjects.Add(new Enemy(new Vector2(i * 60, 90), "e3"));
-            }
-
-            allObjects.Add(Player.Instance);
-
-
-
-            for (int i = 0; i < allObjects.Count; i++)
-            
+           
             foreach (SpriteObject obj in tmpObjects)
             {
                 obj.LoadContent(Content);
