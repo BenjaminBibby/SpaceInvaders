@@ -76,7 +76,12 @@ namespace SpriteExample
         }
         protected override void OnCollision(SpriteObject other)
         {
-
+            if(other is Laser)
+            {
+                other.Position += new Vector2(10000, 0);
+                if (this.currentIndex < this.Rectangles.Length-1)
+                    this.currentIndex++;
+            }
         }
         protected override void AnimationRestart()
         {
