@@ -39,11 +39,11 @@ namespace SpriteExample
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>(@"SpaceInvader");
-
-
-            CreateAnimation("Player", 1, 0, 0, texture.Width, texture.Height, Vector2.Zero, 0);
-
+            if (texture == null)
+            {
+                texture = content.Load<Texture2D>(@"SpaceInvader");
+                CreateAnimation("Player", 1, 0, 0, texture.Width, texture.Height, Vector2.Zero, 0);
+            }
             base.LoadContent(content);
         }
 
@@ -76,7 +76,8 @@ namespace SpriteExample
             }
             if(keyState.IsKeyDown(Keys.Space))
             {
-                Game1.AllObjects.Add(new Laser(Orientation.UP, "LaserSprite", this.Position));
+                new Laser(Orientation.UP, "LaserSprite", this.Position);
+                //new Laser(new Vector2(50, 50), "LaserSprite");
             }
         }
 

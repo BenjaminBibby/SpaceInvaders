@@ -70,6 +70,7 @@ namespace SpriteExample
 
         public virtual void LoadContent(ContentManager content)
         {
+            if(boxTexture == null)
             boxTexture = content.Load<Texture2D>(@"pixel");
         }
 
@@ -120,40 +121,40 @@ namespace SpriteExample
 
         private void HandleCollision()
         {
-            foreach (SpriteObject obj in Game1.AllObjects)
-            {
-                if(obj != this && obj.GetType() != this.GetType() && obj.CollisionRect.Intersects(this.CollisionRect))
-                {
-                    //if(PixelCollision(obj))
-                    //{
-                    //    OnCollision(obj);
-                    //}
-                }
-            }
+            //foreach (SpriteObject obj in Game1.TmpObjects)
+            //{
+            //    if(obj != this && obj.GetType() != this.GetType() && obj.CollisionRect.Intersects(this.CollisionRect))
+            //    {
+            //        //if(PixelCollision(obj))
+            //        //{
+            //        //    OnCollision(obj);
+            //        //}
+            //    }
+            //}
         }
 
         private bool PixelCollision(SpriteObject other)
         {
-            int top = Math.Max(this.CollisionRect.Top, other.CollisionRect.Top);
-            int bottom = Math.Min(this.CollisionRect.Bottom, other.CollisionRect.Bottom);
-            int left = Math.Max(this.CollisionRect.Left, other.CollisionRect.Left);
-            int right = Math.Min(this.CollisionRect.Right, other.CollisionRect.Right);
+            //int top = Math.Max(this.CollisionRect.Top, other.CollisionRect.Top);
+            //int bottom = Math.Min(this.CollisionRect.Bottom, other.CollisionRect.Bottom);
+            //int left = Math.Max(this.CollisionRect.Left, other.CollisionRect.Left);
+            //int right = Math.Min(this.CollisionRect.Right, other.CollisionRect.Right);
 
-            for (int y = top; y < bottom; y++)
-            {
-                for (int x = left; x < right; x++)
-                {                 
-                    Color colorA = animations[currentAnimation].Colors[currentIndex]
-                    [(x - CollisionRect.Left) + (y - CollisionRect.Top) * CollisionRect.Width];
-                    Color colorB = other.animations[other.CurrentAnimation].Colors[other.currentIndex]
-                    [(x - other.CollisionRect.Left) + (y - other.CollisionRect.Top) * other.CollisionRect.Width];
+            //for (int y = top; y < bottom; y++)
+            //{
+            //    for (int x = left; x < right; x++)
+            //    {                 
+            //        Color colorA = animations[currentAnimation].Colors[currentIndex]
+            //        [(x - CollisionRect.Left) + (y - CollisionRect.Top) * CollisionRect.Width];
+            //        Color colorB = other.animations[other.CurrentAnimation].Colors[other.currentIndex]
+            //        [(x - other.CollisionRect.Left) + (y - other.CollisionRect.Top) * other.CollisionRect.Width];
 
-                    if(colorA.A != 0 && colorB.A != 0)
-                    {
-                        return true;
-                    }
-                }
-            }
+            //        if(colorA.A != 0 && colorB.A != 0)
+            //        {
+            //            return true;
+            //        }
+            //    }
+            //}
 
             return false;
         }

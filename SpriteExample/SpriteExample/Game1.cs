@@ -19,8 +19,8 @@ namespace SpriteExample
         private static List<SpriteObject> tmpObjects = new List<SpriteObject>();
         internal static List<SpriteObject> TmpObjects
         {
-            get { return Game1.tmpObjects; }
-            set { Game1.tmpObjects = value; }
+            get { return tmpObjects; }
+            set { tmpObjects = value; }
         }
 
         private static List<SpriteObject> allObjects = new List<SpriteObject>();
@@ -48,6 +48,10 @@ namespace SpriteExample
         {
             // TODO: Add your initialization logic here
 
+            new Enemy(new Vector2(0, 0), "E1");
+            allObjects.Add(Player.Instance);
+
+            //tmpObjects = allObjects;
 
             base.Initialize();
         }
@@ -59,12 +63,10 @@ namespace SpriteExample
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            if(spriteBatch == null)
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            allObjects.Add(new Enemy(new Vector2(0, 0), "E1"));
-            allObjects.Add(Player.Instance);
-
-            foreach (SpriteObject obj in allObjects)
+            foreach (SpriteObject obj in tmpObjects)
             {
                  obj.LoadContent(Content);
             }
@@ -89,19 +91,25 @@ namespace SpriteExample
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //TmpObjects = AllObjects
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            tmpObjects = allObjects;
+            // Adds new objects to objects
+            foreach(SpriteObject obj in allObjects)
+            {
+                if(!tmpObjects.Contains(obj))
+                {
+                    tmpObjects.Add(obj);
+                    LoadContent();
+                }
+            }
 
             // TODO: Add your update logic here
             foreach(SpriteObject obj in tmpObjects)
             {
-                obj.LoadContent(Content);
                 obj.Update(gameTime);
             }
-
+            
             base.Update(gameTime);
         }
 

@@ -25,6 +25,8 @@ namespace SpriteExample
             this.type = type;
 
             CurrentAnimation = "MoveRight";
+
+            Game1.AllObjects.Add(this);
         }
 
         public override void Update(GameTime gameTime)
@@ -36,6 +38,7 @@ namespace SpriteExample
 
         public override void LoadContent(ContentManager content)
         {
+            if(texture == null)
             texture = content.Load<Texture2D>(@"sponge");
             
             base.LoadContent(content);

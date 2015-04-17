@@ -27,6 +27,7 @@ namespace SpriteExample
 
         public override void LoadContent(ContentManager content)
         {
+            if(texture == null)
             texture = content.Load<Texture2D>(@"" + imgPath);
             
             base.LoadContent(content);
@@ -51,10 +52,12 @@ namespace SpriteExample
 
         protected override void AnimationRestart()
         {
+
         }
 
         protected override void OnCollision(SpriteObject other)
         {
+
         }
     }
 }
