@@ -27,13 +27,6 @@ namespace SpriteExample
         public Shield(Vector2 position, int type)
             : base(position)
         {
-
-            CreateAnimation("LeftBottom", 4, 0, 0, 34, 32, Vector2.Zero, 0);
-            CreateAnimation("LeftTop", 4, 32, 0, 30, 32, Vector2.Zero, 0);
-            CreateAnimation("RightBottom", 4, 64, 0, 27, 30, Vector2.Zero, 0);
-            CreateAnimation("MidBottom", 4, 94, 0, 27, 30, Vector2.Zero, 0);
-            CreateAnimation("RightTop", 4, 124, 0, 33, 28, Vector2.Zero, 0);
-            CreateAnimation("MidTop", 4, 152, 0, 34, 27, Vector2.Zero, 0);
             this.type = type;
             #region Switch for type
             switch (type)
@@ -57,15 +50,23 @@ namespace SpriteExample
                     CurrentAnimation = "RightBottom";
                     break;
                 default:
+                    CurrentAnimation = "RightTop";
                     break;
             }
             #endregion
+
             Game1.AllObjects.Add(this);
         }
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>(@"ShieldSheet");
+            texture = content.Load<Texture2D>(@"SheetShield");
 
+            CreateAnimation("LeftTop", 4, 0, 0, 32, 32, Vector2.Zero, 0);
+            CreateAnimation("MidTop", 4, 32, 0, 32, 32, Vector2.Zero, 0);
+            CreateAnimation("RightTop", 4, 64, 0, 32, 32, Vector2.Zero, 0);
+            CreateAnimation("LeftBottom", 4, 96, 0, 32, 32, Vector2.Zero, 0);
+            CreateAnimation("MidBottom", 4, 128, 0, 32, 32, Vector2.Zero, 0);
+            CreateAnimation("RightBottom", 4, 160, 0, 32, 32, Vector2.Zero, 0);
             base.LoadContent(content);
         }
         public override void Update(GameTime gameTime)

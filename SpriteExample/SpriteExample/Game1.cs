@@ -15,8 +15,6 @@ namespace SpriteExample
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Enemy enemy;
-        Shield shield;
 
         private Texture2D lives;
 
@@ -45,7 +43,19 @@ namespace SpriteExample
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            for (int x = 0; x < 4; x++)
+            {
+                int xOffset = 210 * x;
+                for (int i = 1; i < 7; i++)
+                {
+                    if (i < 4)
+                        new Shield(new Vector2(xOffset + i * 32, 500), i);
+                    else
+                    {
+                        new Shield(new Vector2(xOffset + ((i - 3) * 32), 532), i);
+                    }
+                }
+            }
 
             base.Initialize();
         }
@@ -58,9 +68,7 @@ namespace SpriteExample
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            enemy = new Enemy(new Vector2(0, 0),"UFO");
             lives = Content.Load<Texture2D>("SpaceInvader");
-            shield = new Shield(new Vector2(100, 200),1);
 
             for (int i = 1; i < 9; i++)
             {
@@ -75,12 +83,6 @@ namespace SpriteExample
                 allObjects.Add(new Enemy(new Vector2(i * 60, 90), "e3"));
             }
 
-            for (int i = 0; i < 6; i++)
-            {
-                allObjects.Add(new Shield(new Vector2(50 + i * 32), i));
-            }
-
-            allObjects.Add(enemy);
             allObjects.Add(Player.Instance);
 
 

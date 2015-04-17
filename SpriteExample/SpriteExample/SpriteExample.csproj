@@ -72,7 +72,7 @@
     <Content Include="Content\playerSheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\ShieldSheet.png">
+    <Content Include="Content\SheetShield.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\SpaceInvader.png">
