@@ -30,6 +30,8 @@ namespace SpriteExample
             CreateAnimation("UFO", 1, 96, 0, 96, 42, Vector2.Zero, 0);
             this.type = type;
 
+            Game1.AllObjects.Add(this);
+
             switch (type.ToLower())
             {
                 case "e1":
@@ -62,8 +64,9 @@ namespace SpriteExample
 
         public override void LoadContent(ContentManager content)
         {
+            if(texture == null)
             texture = content.Load<Texture2D>(@"EnemySheet");
-            
+
             base.LoadContent(content);
         }
 
@@ -74,6 +77,7 @@ namespace SpriteExample
 
         protected override void OnCollision(SpriteObject obj)
         {
+            
         }
     }
 }

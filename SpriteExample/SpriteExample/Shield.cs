@@ -60,6 +60,8 @@ namespace SpriteExample
         public override void LoadContent(ContentManager content)
         {
             texture = content.Load<Texture2D>(@"SheetShield");
+            if(texture == null)
+            texture = content.Load<Texture2D>(@"ShieldSheet");
 
             CreateAnimation("LeftTop", 4, 0, 0, 32, 32, Vector2.Zero, 0);
             CreateAnimation("MidTop", 4, 32, 0, 32, 32, Vector2.Zero, 0);

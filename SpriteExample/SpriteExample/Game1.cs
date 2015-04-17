@@ -16,6 +16,12 @@ namespace SpriteExample
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        private static List<SpriteObject> tmpObjects = new List<SpriteObject>();
+        internal static List<SpriteObject> TmpObjects
+        {
+            get { return tmpObjects; }
+            set { tmpObjects = value; }
+        }
         private Texture2D lives;
 
         private static List<SpriteObject> allObjects = new List<SpriteObject>();
@@ -57,6 +63,33 @@ namespace SpriteExample
                 }
             }
 
+            new Enemy(new Vector2(0, 0), "E1");
+            Player player = Player.Instance;
+            lives = Content.Load<Texture2D>("SpaceInvader");
+            shield = new Shield(new Vector2(100, 200), 1);
+
+            for (int i = 1; i < 9; i++)
+            {
+                if (i < 3)
+                {
+                    new Enemy(new Vector2(i * 60, 0), "e1");
+                }
+                else if (i >= 3 && i < 6)
+                {
+                    new Enemy(new Vector2(i * 60, 45), "e2");
+                }
+                else if (i < 9 && i >= 6)
+                {
+                    new Enemy(new Vector2(i * 60, 90), "e3");
+                }
+            }
+
+            /*for (int i = 0; i < 6; i++)
+            {
+                new Shield(new Vector2(50 + i * 32), i);
+            }*/
+            //tmpObjects = allObjects;
+
             base.Initialize();
         }
 
@@ -67,6 +100,7 @@ namespace SpriteExample
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+            if(spriteBatch == null)
             spriteBatch = new SpriteBatch(GraphicsDevice);
             lives = Content.Load<Texture2D>("SpaceInvader");
 
@@ -88,10 +122,11 @@ namespace SpriteExample
 
 
             for (int i = 0; i < allObjects.Count; i++)
+            
+            foreach (SpriteObject obj in tmpObjects)
             {
-                allObjects[i].LoadContent(Content);
+                obj.LoadContent(Content);
             }
-
             // TODO: use this.Content to load your game content here
 
         }
@@ -112,16 +147,25 @@ namespace SpriteExample
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            //TmpObjects = AllObjects
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
-            for (int i = 0; i < allObjects.Count; i++)
+            // Adds new objects to objects
+            foreach(SpriteObject obj in allObjects)
             {
-                allObjects[i].Update(gameTime);
+                if(!tmpObjects.Contains(obj))
+                {
+                    tmpObjects.Add(obj);
+                    LoadContent();
+                }
             }
 
+            // TODO: Add your update logic here
+            foreach(SpriteObject obj in tmpObjects)
+            {
+                obj.Update(gameTime);
+            }
+            
             base.Update(gameTime);
         }
 
@@ -141,9 +185,9 @@ namespace SpriteExample
                 spriteBatch.Draw(lives, new Rectangle(575 + (i * 75), 10, 52, 32), Color.White);                
             }
 
-            for (int i = 0; i < allObjects.Count; i++)
+            foreach(SpriteObject obj in tmpObjects)
             {
-                allObjects[i].Draw(spriteBatch);
+                obj.Draw(spriteBatch);
             }
 
             spriteBatch.End();

@@ -42,14 +42,16 @@ namespace SpriteExample
         {
             this.Position = new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width/2 - 26), 625);
             this.speed = 250;
+            Game1.AllObjects.Add(this);
         }
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>(@"SpaceInvader");
-            
-            CreateAnimation("Player", 1, 0, 0, texture.Width, texture.Height, Vector2.Zero, 0);
-
+            if (texture == null)
+            {
+                texture = content.Load<Texture2D>(@"SpaceInvader");
+                CreateAnimation("Player", 1, 0, 0, texture.Width, texture.Height, Vector2.Zero, 0);
+            }
             base.LoadContent(content);
         }
 
@@ -82,7 +84,8 @@ namespace SpriteExample
             }
             if(keyState.IsKeyDown(Keys.Space))
             {
-                //new Laser(Orientation.UP, "LaserSprite", this.Position);
+                new Laser(Orientation.UP, "LaserSprite", this.Position);
+                //new Laser(new Vector2(50, 50), "LaserSprite");
                 this.lives = 2;
             }
         }

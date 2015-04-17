@@ -27,7 +27,8 @@ namespace SpriteExample
 
         public override void LoadContent(ContentManager content)
         {
-            texture = content.Load<Texture2D>(@"LaserSprite");
+            if(texture == null)
+            texture = content.Load<Texture2D>(@"" + imgPath);
             
             base.LoadContent(content);
         }
@@ -51,10 +52,12 @@ namespace SpriteExample
 
         protected override void AnimationRestart()
         {
+
         }
 
         protected override void OnCollision(SpriteObject other)
         {
+
         }
     }
 }
