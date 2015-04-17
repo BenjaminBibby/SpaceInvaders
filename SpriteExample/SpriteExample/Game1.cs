@@ -53,8 +53,30 @@ namespace SpriteExample
             // TODO: Add your initialization logic here
 
             new Enemy(new Vector2(0, 0), "E1");
-            allObjects.Add(Player.Instance);
+            Player player = Player.Instance;
+            lives = Content.Load<Texture2D>("SpaceInvader");
+            shield = new Shield(new Vector2(100, 200), 1);
 
+            for (int i = 1; i < 9; i++)
+            {
+                if (i < 3)
+                {
+                    new Enemy(new Vector2(i * 60, 0), "e1");
+                }
+                else if (i >= 3 && i < 6)
+                {
+                    new Enemy(new Vector2(i * 60, 45), "e2");
+                }
+                else if (i < 9 && i >= 6)
+                {
+                    new Enemy(new Vector2(i * 60, 90), "e3");
+                }
+            }
+
+            /*for (int i = 0; i < 6; i++)
+            {
+                new Shield(new Vector2(50 + i * 32), i);
+            }*/
             //tmpObjects = allObjects;
 
             base.Initialize();
@@ -69,39 +91,11 @@ namespace SpriteExample
             // Create a new SpriteBatch, which can be used to draw textures.
             if(spriteBatch == null)
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            enemy = new Enemy(new Vector2(0, 0),"UFO");
-            lives = Content.Load<Texture2D>("SpaceInvader");
-            shield = new Shield(new Vector2(100, 200),1);
-
-            for (int i = 1; i < 9; i++)
-            {
-               
-                if(i < 3)
-                allObjects.Add(new Enemy(new Vector2(i * 60, 0), "e1"));
-
+            
             foreach (SpriteObject obj in tmpObjects)
-                if (i >= 3 && i < 6)
-                allObjects.Add(new Enemy(new Vector2(i * 60, 45), "e2"));
-
-                if(i < 9 && i >= 6)
-                allObjects.Add(new Enemy(new Vector2(i * 60, 90), "e3"));
-            }
-
-            for (int i = 0; i < 6; i++)
             {
-                allObjects.Add(new Shield(new Vector2(50 + i * 32), i));
+                obj.LoadContent(Content);
             }
-
-            allObjects.Add(enemy);
-            allObjects.Add(Player.Instance);
-
-
-
-            for (int i = 0; i < allObjects.Count; i++)
-            {
-                allObjects[i].LoadContent(Content);
-            }
-
             // TODO: use this.Content to load your game content here
 
         }
@@ -160,9 +154,9 @@ namespace SpriteExample
                 spriteBatch.Draw(lives, new Rectangle(575 + (i * 75), 10, 52, 32), Color.White);                
             }
 
-            for (int i = 0; i < allObjects.Count; i++)
+            foreach(SpriteObject obj in tmpObjects)
             {
-                allObjects[i].Draw(spriteBatch);
+                obj.Draw(spriteBatch);
             }
 
             spriteBatch.End();

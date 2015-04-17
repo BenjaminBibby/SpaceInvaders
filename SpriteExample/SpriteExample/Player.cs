@@ -42,6 +42,7 @@ namespace SpriteExample
         {
             this.Position = new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width/2 - 26), 625);
             this.speed = 250;
+            Game1.AllObjects.Add(this);
         }
 
         public override void LoadContent(ContentManager content)

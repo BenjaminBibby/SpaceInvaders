@@ -64,6 +64,7 @@ namespace SpriteExample
         }
         public override void LoadContent(ContentManager content)
         {
+            if(texture == null)
             texture = content.Load<Texture2D>(@"ShieldSheet");
 
             base.LoadContent(content);

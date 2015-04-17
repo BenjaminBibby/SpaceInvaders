@@ -30,11 +30,8 @@ namespace SpriteExample
             CreateAnimation("UFO", 1, 96, 0, 96, 42, Vector2.Zero, 0);
             this.type = type;
 
-<<<<<<< HEAD
-            CurrentAnimation = "MoveRight";
-
             Game1.AllObjects.Add(this);
-=======
+
             switch (type.ToLower())
             {
                 case "e1":
@@ -56,7 +53,6 @@ namespace SpriteExample
                 default:
                     break;
             }
->>>>>>> af34a2f043be87159d97f750f0270036e61827c8
         }
 
         public override void Update(GameTime gameTime)
@@ -68,13 +64,9 @@ namespace SpriteExample
 
         public override void LoadContent(ContentManager content)
         {
-<<<<<<< HEAD
             if(texture == null)
-            texture = content.Load<Texture2D>(@"sponge");
-=======
             texture = content.Load<Texture2D>(@"EnemySheet");
->>>>>>> af34a2f043be87159d97f750f0270036e61827c8
-            
+
             base.LoadContent(content);
         }
 
@@ -85,6 +77,7 @@ namespace SpriteExample
 
         protected override void OnCollision(SpriteObject obj)
         {
+            
         }
     }
 }
