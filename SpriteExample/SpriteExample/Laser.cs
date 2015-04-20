@@ -82,12 +82,12 @@ namespace SpriteExample
         {
             if (other is Enemy || other is Shield)
             {
-                hasCollided = true;
                 this.speed = 0;
+                hasCollided = true;
 
                 if (other is Enemy)
                 {
-                    Destroy(this);
+                    //Destroy(this);
                 }
             }
         }

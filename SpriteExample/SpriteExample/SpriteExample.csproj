@@ -78,6 +78,9 @@
     <Content Include="Content\SheetShield.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\SheetShieldNew.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\SpaceInvader.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
