@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace SpriteExample
 {
-    enum Orientation {UP, DOWN}
+    enum Orientation { UP, DOWN }
     class Laser : SpriteObject
     {
         private Orientation direction;
@@ -23,7 +23,8 @@ namespace SpriteExample
         }
         private string imgPath;
 
-        public Laser(Orientation direction, string imagePath, Vector2 position) : base(position)
+        public Laser(Orientation direction, string imagePath, Vector2 position)
+            : base(position)
         {
             this.direction = direction;
             this.imgPath = imagePath;
@@ -36,19 +37,19 @@ namespace SpriteExample
 
         public override void LoadContent(ContentManager content)
         {
-            if(texture == null)
-            texture = content.Load<Texture2D>(@"" + imgPath);
-            
+            if (texture == null)
+                texture = content.Load<Texture2D>(@"" + imgPath);
+
             base.LoadContent(content);
         }
         public override void Update(GameTime gameTime)
         {
-            if(this.Position.Y < 0 - this.CollisionRect.Height || this.Position.Y > 100)
+            if (this.Position.Y < 0 - this.CollisionRect.Height || this.Position.Y > 100)
             {
                 //Destroy the Laser
             }
 
-            if(hasCollided == false)
+            if (hasCollided == false)
             {
                 CurrentAnimation = "Laser";
             }
@@ -79,10 +80,15 @@ namespace SpriteExample
 
         protected override void OnCollision(SpriteObject other)
         {
-            if(other is Enemy || other is Shield)
+            if (other is Enemy || other is Shield)
             {
                 hasCollided = true;
                 this.speed = 0;
+
+                if (other is Enemy)
+                {
+                    Destroy(this);
+                }
             }
         }
     }

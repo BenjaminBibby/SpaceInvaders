@@ -43,6 +43,7 @@ namespace SpriteExample
             : base(position)
         {
             this.Position = new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2 - 26), 625);
+            this.Position = new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .5f - 26), 625);
             this.speed = 250;
             Game1.AllObjects.Add(this);
         }
@@ -78,19 +79,19 @@ namespace SpriteExample
 
         private void HandleInput(KeyboardState keyState)
         {
-            if (keyState.IsKeyDown(Keys.A) && this.Position.X - velocity.X > 0)
-            {
-                velocity += new Vector2(-1, 0);
-            }
-            if (keyState.IsKeyDown(Keys.D) && this.Position.X + velocity.X + this.CollisionRect.Width < GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width)
-            {
-                velocity += new Vector2(1, 0);
-            }
-            if (keyState.IsKeyDown(Keys.Space) && timer >= 30)
-            {
-                new Laser(Orientation.UP, "LaserSheet", new Vector2(this.Position.X + (this.CollisionRect.Width / 2) - 6, this.Position.Y - 10));
-                timer = 0;
-            }
+                if (keyState.IsKeyDown(Keys.A) && (this.Position.X - velocity.X) > 0)
+                {
+                    velocity += new Vector2(-1, 0);
+                }
+                if (keyState.IsKeyDown(Keys.D) && (this.Position.X + this.CollisionRect.Width) < GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width)
+                {
+                    velocity += new Vector2(1, 0);
+                }
+                if (keyState.IsKeyDown(Keys.Space) && timer >= 30)
+                {
+                    new Laser(Orientation.UP, "LaserSheet", new Vector2(this.Position.X + (this.CollisionRect.Width / 2) - 6, this.Position.Y - 10));
+                    timer = 0;
+                }
         }
 
         private void Attack()
