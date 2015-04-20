@@ -130,14 +130,23 @@ namespace SpriteExample
                 Exit();
 
             // Adds new objects to objects
-            foreach(SpriteObject obj in allObjects)
+            if(TmpObjects != AllObjects)
+            {
+                TmpObjects.Clear();
+                foreach(SpriteObject obj in allObjects)
+                {
+                    TmpObjects.Add(obj);
+                }
+                LoadContent();
+            }
+            /*foreach(SpriteObject obj in allObjects)
             {
                 if(!tmpObjects.Contains(obj))
                 {
                     tmpObjects.Add(obj);
                     LoadContent();
                 }
-            }
+            }*/
 
             // TODO: Add your update logic here
             foreach(SpriteObject obj in tmpObjects)
