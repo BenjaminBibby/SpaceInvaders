@@ -70,14 +70,24 @@ namespace SpriteExample
             base.LoadContent(content);
         }
 
+        private void Move()
+        {
+            if(this.Position.X - this.speed < 0)
+            {
+            }
+        }
+
         protected override void AnimationRestart()
         {
          
         }
 
-        protected override void OnCollision(SpriteObject obj)
+        protected override void OnCollision(SpriteObject other)
         {
-            
+            if(other is Laser && (other as Laser).Direction == Orientation.UP)
+            {
+                //Destroy the enemy
+            }
         }
     }
 }

@@ -66,7 +66,7 @@ namespace SpriteExample
         public override void LoadContent(ContentManager content)
         {
             if(texture == null)
-            texture = content.Load<Texture2D>(@"SheetShield");
+            texture = content.Load<Texture2D>(@"SheetShieldNew");
 
             base.LoadContent(content);
         }
@@ -78,7 +78,7 @@ namespace SpriteExample
         {
             if(other is Laser)
             {
-                other.Position += new Vector2(10000, 0);
+                //Destroy the laser
                 if (this.currentIndex < this.Rectangles.Length-1)
                     this.currentIndex++;
             }

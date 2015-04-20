@@ -63,6 +63,9 @@
     <Content Include="Content\EnemySpriteSheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\LaserSheet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\LaserSprite.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -73,6 +76,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\SheetShield.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\SheetShieldNew.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\SpaceInvader.png">
