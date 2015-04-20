@@ -84,7 +84,7 @@ namespace SpriteExample
             }
             if(keyState.IsKeyDown(Keys.Space))
             {
-                new Laser(Orientation.UP, "LaserSprite", this.Position);
+                new Laser(Orientation.UP, "LaserSprite", new Vector2(this.Position.X+(this.CollisionRect.Width/2)-2,this.Position.Y-5));
                 //new Laser(new Vector2(50, 50), "LaserSprite");
                 this.lives = 2;
             }
