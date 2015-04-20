@@ -161,6 +161,17 @@ namespace SpriteExample
 
             return false;
         }
+        public void Destroy(SpriteObject sprObj)
+        {
+            Game1.AllObjects.Remove(sprObj);
+            foreach(SpriteObject obj in Game1.TmpObjects)
+            {
+                if(obj == sprObj)
+                {
+                    Game1.TmpObjects.Remove(obj);
+                }
+            }
+        }
 
         protected abstract void AnimationRestart();
 

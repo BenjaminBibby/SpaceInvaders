@@ -57,7 +57,10 @@ namespace SpriteExample
 
         protected override void OnCollision(SpriteObject other)
         {
-
+            if(other is Enemy)
+            {
+                Destroy(this);
+            }
         }
     }
 }
