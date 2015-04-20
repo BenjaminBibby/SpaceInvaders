@@ -78,7 +78,7 @@ namespace SpriteExample
         {
             if(other is Laser)
             {
-                other.Position += new Vector2(10000, 0);
+                //Destroy the laser
                 if (this.currentIndex < this.Rectangles.Length-1)
                     this.currentIndex++;
             }

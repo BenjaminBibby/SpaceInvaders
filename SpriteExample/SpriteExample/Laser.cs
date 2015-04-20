@@ -14,6 +14,13 @@ namespace SpriteExample
     class Laser : SpriteObject
     {
         private Orientation direction;
+        private bool hasCollided = false;
+
+        public Orientation Direction
+        {
+            get { return direction; }
+            set { direction = value; }
+        }
         private string imgPath;
 
         public Laser(Orientation direction, string imagePath, Vector2 position) : base(position)
@@ -21,7 +28,9 @@ namespace SpriteExample
             this.direction = direction;
             this.imgPath = imagePath;
             this.speed = 5;
-            CreateAnimation("Laser", 1, 0, 0, 6, 12, Vector2.Zero, 0);
+            hasCollided = false;
+            CreateAnimation("Laser", 1, 0, 0, 12, 23, Vector2.Zero, 0);
+            CreateAnimation("Explosion", 1, 23, 0, 50, 31, new Vector2(25, 15), 0);
             Game1.AllObjects.Add(this);
         }
 
@@ -34,7 +43,20 @@ namespace SpriteExample
         }
         public override void Update(GameTime gameTime)
         {
-            CurrentAnimation = "Laser";
+            if(this.Position.Y < 0 - this.CollisionRect.Height || this.Position.Y > 100)
+            {
+                //Destroy the Laser
+            }
+
+            if(hasCollided == false)
+            {
+                CurrentAnimation = "Laser";
+            }
+            else
+            {
+                CurrentAnimation = "Explosion";
+            }
+
             switch (direction)
             {
                 case Orientation.UP:
@@ -57,7 +79,11 @@ namespace SpriteExample
 
         protected override void OnCollision(SpriteObject other)
         {
-
+            if(other is Enemy || other is Shield)
+            {
+                hasCollided = true;
+                this.speed = 0;
+            }
         }
     }
 }

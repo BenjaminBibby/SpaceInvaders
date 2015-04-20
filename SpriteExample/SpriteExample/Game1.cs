@@ -36,6 +36,7 @@ namespace SpriteExample
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 675;
+            graphics.PreferredBackBufferWidth = 800;
             Window.Title = "Space Invaders";
             Content.RootDirectory = "Content";
         }
