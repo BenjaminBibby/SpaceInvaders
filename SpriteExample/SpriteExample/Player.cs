@@ -42,8 +42,7 @@ namespace SpriteExample
         private Player(Vector2 position)
             : base(position)
         {
-            this.Position = new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / 2 - 26), 625);
-            this.Position = new Vector2((GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width * .5f - 26), 625);
+            this.Position = new Vector2(400 - (52 * 0.5f) , 625);
             this.speed = 250;
             Game1.AllObjects.Add(this);
         }

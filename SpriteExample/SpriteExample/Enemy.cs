@@ -72,9 +72,6 @@ namespace SpriteExample
 
         private void Move()
         {
-            if(this.Position.X - this.speed < 0)
-            {
-            }
         }
 
         protected override void AnimationRestart()
@@ -86,7 +83,12 @@ namespace SpriteExample
         {
             if(other is Laser && (other as Laser).Direction == Orientation.UP)
             {
-                //Destroy the enemy
+                Destroy(this);
+
+                if(other is Laser)
+                {
+                    Destroy(other);
+                }
             }
         }
     }
