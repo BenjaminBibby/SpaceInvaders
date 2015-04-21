@@ -7,12 +7,14 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SpriteExample
 {
     enum Orientation { UP, DOWN }
     class Laser : SpriteObject
     {
+        private SoundEffect laserSound;
         private Orientation direction;
         private bool hasCollided = false;
 
@@ -44,7 +46,7 @@ namespace SpriteExample
         }
         public override void Update(GameTime gameTime)
         {
-            if (this.Position.Y < 0 || this.Position.Y > GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height)
+            if (this.Position.Y < 0 || this.Position.Y > 675)
             {
                 Destroy(this);
             }
@@ -84,12 +86,6 @@ namespace SpriteExample
             {
                 this.speed = 0;
                 hasCollided = true;
-
-                if (other is Enemy)
-                {
-                    Destroy(other);
-                    Destroy(this);
-                }
             }
         }
     }

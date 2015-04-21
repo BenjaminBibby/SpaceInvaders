@@ -81,12 +81,22 @@ namespace SpriteExample
         {
             spriteBatch.Draw(texture, position, rectangles[currentIndex], color, 0, origin, scale, effect, layer);
 
+            Rectangle topBorder = new Rectangle(0, 0, 800, 5);
+            Rectangle bottomBorder = new Rectangle(0, 670, 800, 5);
+            Rectangle rightBorder = new Rectangle(795, 0, 5,800);
+            Rectangle leftBorder = new Rectangle(0, 0, 5, 800);
+
+            spriteBatch.Draw(boxTexture, topBorder, new Color(76, 255,0));
+            spriteBatch.Draw(boxTexture, bottomBorder, new Color(76, 255, 0));
+            spriteBatch.Draw(boxTexture, rightBorder, new Color(76, 255, 0));
+            spriteBatch.Draw(boxTexture, leftBorder, new Color(76, 255, 0));
+
+#if DEBUG
             Rectangle topLine = new Rectangle(CollisionRect.X, CollisionRect.Y, CollisionRect.Width, 1);
             Rectangle bottomLine = new Rectangle(CollisionRect.X, CollisionRect.Y + CollisionRect.Height, CollisionRect.Width, 1);
             Rectangle rightLine = new Rectangle(CollisionRect.X + CollisionRect.Width, CollisionRect.Y, 1, CollisionRect.Height);
             Rectangle leftLine = new Rectangle(CollisionRect.X, CollisionRect.Y, 1, CollisionRect.Height);
 
-#if DEBUG
             spriteBatch.Draw(boxTexture, topLine, Color.Red);
             spriteBatch.Draw(boxTexture, bottomLine, Color.Red);
             spriteBatch.Draw(boxTexture, rightLine, Color.Red);
@@ -147,14 +157,6 @@ namespace SpriteExample
         public void Destroy(SpriteObject sprObj)
         {
             Game1.AllObjects.Remove(sprObj);
-            //sprObj = null;
-            /*foreach(SpriteObject obj in Game1.TmpObjects)
-            {
-                if(obj == sprObj)
-                {
-                    Game1.TmpObjects.Remove(obj);
-                }
-            }*/
         }
 
         protected abstract void AnimationRestart();
