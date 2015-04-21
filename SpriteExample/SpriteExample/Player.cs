@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Audio;
+using IrrKlang;
 
 namespace SpriteExample
 {
@@ -99,6 +100,7 @@ namespace SpriteExample
                 if (keyState.IsKeyDown(Keys.Space) && timer >= 30)
                 {
                     new Laser(Orientation.UP, "LaserSheet", new Vector2(this.Position.X + (this.CollisionRect.Width / 2) - 6, this.Position.Y - 10));
+                    Game1.soundEngine.Play2D(@"Content\Attack.wav", false);
                     this.CurrentAnimation = "Explode";
                     timer = 0;
                 }
