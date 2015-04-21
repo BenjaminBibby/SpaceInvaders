@@ -78,9 +78,17 @@ namespace SpriteExample
         {
             if(other is Laser)
             {
-                //Destroy the laser
-                if (this.currentIndex < this.Rectangles.Length-1)
+
+                Destroy(other);
+
+                if (this.currentIndex >= this.Rectangles.Length-1)
+                {
+                    Destroy(this);
+                }
+                else if (this.currentIndex < this.Rectangles.Length-1)
+                {
                     this.currentIndex++;
+                }
             }
         }
         protected override void AnimationRestart()
