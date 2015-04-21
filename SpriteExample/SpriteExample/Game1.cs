@@ -15,6 +15,7 @@ namespace SpriteExample
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Text scoreText;
 
         private static List<SpriteObject> tmpObjects = new List<SpriteObject>();
         internal static List<SpriteObject> TmpObjects
@@ -65,7 +66,9 @@ namespace SpriteExample
                     }
                 }
             }
-
+            scoreText = new Text(new Vector2(195, 30), "" + Player.Instance.Score.ToString(),  new Color(76, 255,0));
+            new Text(new Vector2(80, 30), "SCORE", Color.White);
+            new Text(new Vector2(500, 30), "LIVES", Color.White);
             Player player = Player.Instance;
             lives = Content.Load<Texture2D>("SpaceInvader");
 
@@ -83,7 +86,7 @@ namespace SpriteExample
                 }
                 for(int x = 0; x < 8; x++)
                 {
-                    enemyFormation[x, y] = new Enemy(new Vector2(0 + 50 * x, 0 + 50 * y), eType);
+                    enemyFormation[x, y] = new Enemy(new Vector2(0 + 50 * x, 0 + 50 * (y+1)), eType);
                 }
             }
 
@@ -130,6 +133,10 @@ namespace SpriteExample
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+             //new Text(new Vector2(175, 25), "" + Player.Instance.Score.ToString(), Color.White);
+            scoreText.FontOutput = "" + Player.Instance.Score.ToString();
+
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 

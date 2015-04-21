@@ -30,7 +30,7 @@ namespace SpriteExample
         {
             this.direction = direction;
             this.imgPath = imagePath;
-            this.speed = 5;
+            this.speed = 10;
             hasCollided = false;
             CreateAnimation("Laser", 1, 0, 0, 12, 23, Vector2.Zero, 0);
             CreateAnimation("Explosion", 1, 23, 0, 50, 31, new Vector2(25, 15), 0);

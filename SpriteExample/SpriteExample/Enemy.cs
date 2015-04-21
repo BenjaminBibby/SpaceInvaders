@@ -87,6 +87,7 @@ namespace SpriteExample
                 if(other is Laser)
                 {
                     Destroy(other);
+                    Player.Instance.Score += this.pointValue;
                 }
 
 
