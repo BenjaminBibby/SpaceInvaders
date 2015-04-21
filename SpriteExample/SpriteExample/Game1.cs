@@ -31,6 +31,8 @@ namespace SpriteExample
             set { allObjects = value; }
         }
 
+        private Enemy[,] enemyFormation = new Enemy[8, 5];
+
         public Game1()
             : base()
         {
@@ -64,33 +66,34 @@ namespace SpriteExample
                 }
             }
 
-            new Enemy(new Vector2(0, 0), "E1");
             Player player = Player.Instance;
             lives = Content.Load<Texture2D>("SpaceInvader");
 
-            for (int i = 1; i < 9; i++)
+            // The enemyy formation
+            string eType = "e1";
+            for (int y = 0; y < 5; y++ )
             {
-                if (i < 3)
+                if(y > 2)
                 {
-                    new Enemy(new Vector2(i * 60, 0), "e1");
+                    eType = "e2";
                 }
-                else if (i >= 3 && i < 6)
+                else if(y > 3)
                 {
-                    new Enemy(new Vector2(i * 60, 45), "e2");
+                    eType = "e3";
                 }
-                else if (i < 9 && i >= 6)
+                for(int x = 0; x < 8; x++)
                 {
-                    new Enemy(new Vector2(i * 60, 90), "e3");
+                    enemyFormation[x, y] = new Enemy(new Vector2(0 + 50 * x, 0 + 50 * y), eType);
                 }
             }
 
-            /*for (int i = 0; i < 6; i++)
-            {
-                new Shield(new Vector2(50 + i * 32), i);
-            }*/
-            //tmpObjects = allObjects;
+                /*for (int i = 0; i < 6; i++)
+                {
+                    new Shield(new Vector2(50 + i * 32), i);
+                }*/
+                //tmpObjects = allObjects;
 
-            base.Initialize();
+                base.Initialize();
         }
 
         /// <summary>

@@ -44,9 +44,9 @@ namespace SpriteExample
         }
         public override void Update(GameTime gameTime)
         {
-            if (this.Position.Y < 0 - this.CollisionRect.Height || this.Position.Y > 100)
+            if (this.Position.Y < 0 || this.Position.Y > GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height)
             {
-                //Destroy the Laser
+                Destroy(this);
             }
 
             if (hasCollided == false)
@@ -87,7 +87,8 @@ namespace SpriteExample
 
                 if (other is Enemy)
                 {
-                    //Destroy(this);
+                    Destroy(other);
+                    Destroy(this);
                 }
             }
         }
