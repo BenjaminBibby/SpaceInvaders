@@ -16,7 +16,7 @@ namespace SpriteExample
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        int attackTimer;
         Text scoreText;
         public static ISoundEngine soundEngine;
         private EnemyFormation formation;
@@ -57,6 +57,7 @@ namespace SpriteExample
         protected override void Initialize()
         {
             spawnTimer = 0;
+            attackTimer = 0;
             // TODO: Add your initialization logic here
             for (int x = 0; x < 4; x++)
             {
@@ -75,7 +76,7 @@ namespace SpriteExample
             Player player = Player.Instance;
             lives = Content.Load<Texture2D>("SpaceInvader");
 
-            formation = new EnemyFormation(8, 5, new Vector2(50, 50), 10f, 5f);
+            formation = new EnemyFormation(8, 5, new Vector2(50, 50), 10f, 1f);
 
                 /*for (int i = 0; i < 6; i++)
                 {
@@ -121,6 +122,13 @@ namespace SpriteExample
         protected override void Update(GameTime gameTime)
         {
             spawnTimer++;
+            attackTimer++;
+
+            if(attackTimer >= 120)
+            {
+                formation.Attack();
+                attackTimer = 0;
+            }
 
             if(spawnTimer > 300)
             {
