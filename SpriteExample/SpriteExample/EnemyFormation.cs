@@ -16,13 +16,15 @@ namespace SpriteExample
         private Vector2 offset;
         private float spaceBetween;
         private Enemy[, ] enemies;
+        private float speed;
 
-        public EnemyFormation(int width, int height, Vector2 offset, float spaceBetween)
+        public EnemyFormation(int width, int height, Vector2 offset, float spaceBetween, float speed)
         {
             this.width = width;
             this.height = height;
             this.offset = offset;
             this.spaceBetween = spaceBetween;
+            this.speed = speed;
             CreateFormation(width, height, offset, spaceBetween);
         }
 
@@ -76,7 +78,14 @@ namespace SpriteExample
             float[] rows = new float[height];
             for(int y = 0; y < height; y++)
             {
-                for(int x = width - 1; x > 0; x--)
+                /*for(int x = 0; x < width; x++)
+                {
+                    if(enemies[x, y] != null)
+                    {
+                        rows[y] = enemies[x, y].Position.X + enemies[x, y].CollisionRect.Width;
+                    }
+                }*/
+                for(int x = width - 1; x >= 0; x--)
                 {
                     if(enemies[x, y] != null)
                     {
@@ -85,7 +94,7 @@ namespace SpriteExample
                     }
                 }
             }
-            float largest = rows[0];
+            /*float largest = rows[0];
             for (int i = 0; i < rows.Length; i++)
             {
                if(rows[i] > largest)
@@ -93,7 +102,8 @@ namespace SpriteExample
                    largest = rows[i];
                }
             }
-            return largest;
+            return largest;*/
+            return rows.Max();
                 
         }
         /// <summary>
@@ -133,16 +143,15 @@ namespace SpriteExample
                 }
             }
         }
-        public void MoveFormation(int speed)
+        public void MoveFormation()
         {
-            float test = GetStartOfRow();
-            if (test > 675)
+            if (GetWidthOfFormation() >= 800 || GetStartOfRow() <= 0)
             {
+                speed = -1 * speed;
                 foreach(Enemy e in enemies)
                 {
-                    e.Position += new Vector2(-500, e.CollisionRect.Height);
+                    e.Position += new Vector2(0, e.CollisionRect.Height);
                 }
-                speed *= -1;
             }
             for (int y = 0; y < height; y++) 
             {

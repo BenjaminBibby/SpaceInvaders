@@ -73,7 +73,7 @@ namespace SpriteExample
             Player player = Player.Instance;
             lives = Content.Load<Texture2D>("SpaceInvader");
 
-            formation = new EnemyFormation(8, 5, new Vector2(50, 50), 10f);
+            formation = new EnemyFormation(8, 5, new Vector2(50, 50), 10f, 5f);
 
                 /*for (int i = 0; i < 6; i++)
                 {
@@ -146,7 +146,7 @@ namespace SpriteExample
                 obj.Update(gameTime);
             }
 
-            formation.MoveFormation(5);
+            formation.MoveFormation();
 
             base.Update(gameTime);
         }
