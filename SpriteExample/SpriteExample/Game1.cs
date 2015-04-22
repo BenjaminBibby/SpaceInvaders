@@ -20,6 +20,7 @@ namespace SpriteExample
         Text scoreText;
         public static ISoundEngine soundEngine;
         private EnemyFormation formation;
+        private int spawnTimer;
 
         private static List<SpriteObject> tmpObjects = new List<SpriteObject>();
         internal static List<SpriteObject> TmpObjects
@@ -55,6 +56,7 @@ namespace SpriteExample
         /// </summary>
         protected override void Initialize()
         {
+            spawnTimer = 0;
             // TODO: Add your initialization logic here
             for (int x = 0; x < 4; x++)
             {
@@ -118,6 +120,18 @@ namespace SpriteExample
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            spawnTimer++;
+
+            if(spawnTimer > 300)
+            {
+                spawnTimer = 0;
+                Random ufoSpawn = new Random(Guid.NewGuid().GetHashCode());
+                if (ufoSpawn.Next(3) == 1)
+                {
+                    new Enemy(Vector2.Zero, "ufo");
+                }
+            }
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 

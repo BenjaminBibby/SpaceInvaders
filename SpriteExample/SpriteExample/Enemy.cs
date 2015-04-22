@@ -17,6 +17,7 @@ namespace SpriteExample
     {
         private string type;
         private int pointValue;
+        private bool movingLeft;
 
         /// <summary>
         /// Use e1, e2, e3 or ufo. as type.
@@ -29,36 +30,33 @@ namespace SpriteExample
 
             Game1.AllObjects.Add(this);
 
-            switch (type.ToLower())
-            {
-                case "e1":
-                     CreateAnimation("EnemyOne", 2, 0, 0, 32, 32, Vector2.Zero, 1);
-                     CurrentAnimation = "EnemyOne";
-                     this.pointValue = 40;
-                        break;
-                case "e2":
-                     CreateAnimation("EnemyTwo", 2, 32, 0, 44, 32, Vector2.Zero, 1);
-                     CurrentAnimation = "EnemyTwo";
-                     this.pointValue = 20;
-                        break;
-                case "e3":
-                     CreateAnimation("EnemyThree", 2, 64, 0, 48, 32, Vector2.Zero, 1);
-                     CurrentAnimation = "EnemyThree";
-                     this.pointValue = 10;
-                        break;
-                case "ufo":
-                     CreateAnimation("UFO", 1, 96, 0, 96, 42, Vector2.Zero, 0);
-                     CurrentAnimation = "UFO";
-                     this.pointValue = 200;
-                        break;
-                default:
-                    break;
-            }
+            GetEnemyType();
         }
 
         public override void Update(GameTime gameTime)
         {
             velocity = Vector2.Zero;
+
+            if(this.type.ToLower() == "ufo")
+            {
+                if(this.Position.X > 800 && !movingLeft)
+                {
+                    Destroy(this);
+                }
+                else if (this.Position.X + this.CollisionRect.Width < 0 && movingLeft)
+                {
+                    Destroy(this);
+                }
+
+                if (movingLeft)
+                {
+                    this.Position -= new Vector2(this.speed, 0);
+                }
+                else if(!movingLeft)
+                {
+                    this.Position += new Vector2(this.speed, 0);
+                }
+            }
 
             base.Update(gameTime);
         }
@@ -71,8 +69,49 @@ namespace SpriteExample
             base.LoadContent(content);
         }
 
-        private void Move()
+        /// <summary>
+        /// Creates the needed animation from the "type" input given when creating the object
+        /// </summary>
+        private void GetEnemyType()
         {
+            switch (type.ToLower())
+            {
+                case "e1":
+                    CreateAnimation("EnemyOne", 2, 0, 0, 32, 32, Vector2.Zero, 1);
+                    CurrentAnimation = "EnemyOne";
+                    this.pointValue = 40;
+                    break;
+                case "e2":
+                    CreateAnimation("EnemyTwo", 2, 32, 0, 44, 32, Vector2.Zero, 1);
+                    CurrentAnimation = "EnemyTwo";
+                    this.pointValue = 20;
+                    break;
+                case "e3":
+                    CreateAnimation("EnemyThree", 2, 64, 0, 48, 32, Vector2.Zero, 1);
+                    CurrentAnimation = "EnemyThree";
+                    this.pointValue = 10;
+                    break;
+                case "ufo":
+                    Random rndSpawn = new Random(Guid.NewGuid().GetHashCode());;
+                    switch (rndSpawn.Next(2))
+	                {
+                        case 0:
+                            this.Position = new Vector2(-50, 20);
+                            movingLeft = false;
+                            break;
+                        case 1:
+                            this.Position = new Vector2(675, 20);
+                            movingLeft = true;
+                            break;
+	                }
+                    this.speed = 5;
+                    CreateAnimation("UFO", 1, 96, 0, 96, 42, Vector2.Zero, 0);
+                    CurrentAnimation = "UFO";
+                    this.pointValue = 200;
+                    break;
+                default:
+                    break;
+            }
         }
 
         protected override void AnimationRestart()
@@ -82,15 +121,12 @@ namespace SpriteExample
 
         protected override void OnCollision(SpriteObject other)
         {
+            //If the enemy collides with a laser object that was created by the player (direction is UP)
             if(other is Laser && (other as Laser).Direction == Orientation.UP)
             {
-                if(other is Laser)
-                {
-                    Destroy(other);
-                    Game1.soundEngine.Play2D(@"Content\invaderkilled.wav", false);
-                    Player.Instance.Score += this.pointValue;
-                }
-
+                Destroy(other);
+                Game1.soundEngine.Play2D(@"Content\invaderkilled.wav", false);
+                Player.Instance.Score += this.pointValue;
 
                 Destroy(this);
             }
