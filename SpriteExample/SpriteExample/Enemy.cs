@@ -32,7 +32,7 @@ namespace SpriteExample
             switch (type.ToLower())
             {
                 case "e1":
-                        CreateAnimation("EnemyOne", 2, 0, 0, 32, 32, Vector2.Zero, 1);
+                     CreateAnimation("EnemyOne", 2, 0, 0, 32, 32, Vector2.Zero, 1);
                      CurrentAnimation = "EnemyOne";
                      this.pointValue = 40;
                         break;

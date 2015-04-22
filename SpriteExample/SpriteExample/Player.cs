@@ -15,6 +15,7 @@ namespace SpriteExample
 
     class Player : SpriteObject
     {
+        private bool alive;
         private int lives = 3;
         private int timer = 0;
         private int score = 0;
@@ -51,6 +52,7 @@ namespace SpriteExample
         private Player(Vector2 position)
             : base(position)
         {
+            alive = true;
             this.Position = new Vector2(400 - (52 * 0.5f) , 625);
             this.speed = 250;
             Game1.AllObjects.Add(this);
@@ -71,11 +73,23 @@ namespace SpriteExample
         {
             timer++;
 
-            if(CurrentAnimation != "Explode")
-            CurrentAnimation = "Player";
+            if(timer >= 60)
+            {
+                alive = true;
+            }
+
+            if(alive)
+            {
+                CurrentAnimation = "Player";
+            }
+            else
+            {
+                CurrentAnimation = "Explode";
+            }
 
             velocity = Vector2.Zero;
 
+            if(alive)
             HandleInput(Keyboard.GetState());
 
             velocity *= speed;
@@ -101,7 +115,6 @@ namespace SpriteExample
                 {
                     new Laser(Orientation.UP, "LaserSheet", new Vector2(this.Position.X + (this.CollisionRect.Width / 2) - 6, this.Position.Y - 10));
                     Game1.soundEngine.Play2D(@"Content\Attack.wav", false);
-                    this.CurrentAnimation = "Explode";
                     timer = 0;
                 }
         }
@@ -123,6 +136,9 @@ namespace SpriteExample
                 if((other as Laser).Direction == Orientation.DOWN)
                 {
                     Destroy(other);
+                    this.CurrentAnimation = "Explode";
+                    alive = false;
+                    timer = 0;
                     this.lives--;
                 }        
             }
