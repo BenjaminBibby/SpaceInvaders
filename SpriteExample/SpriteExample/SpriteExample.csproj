@@ -48,7 +48,8 @@
     <Compile Include="Text.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="irrKlang.NET4">
+    <Reference Include="irrKlang.NET4, Version=1.0.5235.17346, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Windows\Debug\irrKlang.NET4.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">

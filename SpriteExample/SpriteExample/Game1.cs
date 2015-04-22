@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
+using IrrKlang;
 
 namespace SpriteExample
 {
@@ -16,6 +17,8 @@ namespace SpriteExample
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Text scoreText;
+        public static ISoundEngine soundEngine;
         private EnemyFormation formation;
 
         private static List<SpriteObject> tmpObjects = new List<SpriteObject>();
@@ -36,6 +39,7 @@ namespace SpriteExample
         public Game1()
             : base()
         {
+            soundEngine = new ISoundEngine();
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = 675;
             graphics.PreferredBackBufferWidth = 800;
