@@ -16,6 +16,8 @@ namespace SpriteExample
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        private EnemyFormation formation;
+
         private static List<SpriteObject> tmpObjects = new List<SpriteObject>();
         internal static List<SpriteObject> TmpObjects
         {
@@ -30,8 +32,6 @@ namespace SpriteExample
             get { return allObjects; }
             set { allObjects = value; }
         }
-
-        private Enemy[,] enemyFormation = new Enemy[8, 5];
 
         public Game1()
             : base()
@@ -69,23 +69,7 @@ namespace SpriteExample
             Player player = Player.Instance;
             lives = Content.Load<Texture2D>("SpaceInvader");
 
-            // The enemyy formation
-            string eType = "e1";
-            for (int y = 0; y < 5; y++ )
-            {
-                if(y > 2)
-                {
-                    eType = "e2";
-                }
-                else if(y > 3)
-                {
-                    eType = "e3";
-                }
-                for(int x = 0; x < 8; x++)
-                {
-                    enemyFormation[x, y] = new Enemy(new Vector2(0 + 50 * x, 0 + 50 * y), eType);
-                }
-            }
+            formation = new EnemyFormation(8, 5, new Vector2(50, 50), 10f);
 
                 /*for (int i = 0; i < 6; i++)
                 {
@@ -157,7 +141,9 @@ namespace SpriteExample
             {
                 obj.Update(gameTime);
             }
-            
+
+            formation.MoveFormation(5);
+
             base.Update(gameTime);
         }
 

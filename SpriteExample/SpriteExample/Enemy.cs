@@ -91,5 +91,9 @@ namespace SpriteExample
                 }
             }
         }
+        public void Attack()
+        {
+            new Laser(Orientation.DOWN, "LaserSprite", this.Position);
+        }
     }
 }
