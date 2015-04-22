@@ -114,7 +114,7 @@ namespace SpriteExample
                 if (keyState.IsKeyDown(Keys.Space) && timer >= 30)
                 {
                     new Laser(Orientation.UP, "LaserSheet", new Vector2(this.Position.X + (this.CollisionRect.Width / 2) - 6, this.Position.Y - 10));
-                    Game1.soundEngine.Play2D(@"Content\Attack.wav", false);
+                    Game1.soundEngine.Play2D(@"Content\shoot.wav", false);
                     timer = 0;
                 }
         }
@@ -137,8 +137,9 @@ namespace SpriteExample
                 {
                     Destroy(other);
                     this.CurrentAnimation = "Explode";
+                    Game1.soundEngine.Play2D(@"Content\explosion.wav", false);
                     alive = false;
-                    timer = 0;
+                    timer = 0;                    
                     this.lives--;
                 }        
             }
