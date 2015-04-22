@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
+using Microsoft.Xna.Framework.Audio;
 
 
 namespace SpriteExample
@@ -24,10 +25,6 @@ namespace SpriteExample
         /// <param name="type"></param>
         public Enemy(Vector2 position, string type) : base(position)
         {
-            CreateAnimation("EnemyOne", 2, 0, 0, 32, 32, Vector2.Zero, 1);
-            CreateAnimation("EnemyTwo", 2, 32, 0, 44, 32, Vector2.Zero, 1);
-            CreateAnimation("EnemyThree", 2, 64, 0, 48, 32, Vector2.Zero, 1);
-            CreateAnimation("UFO", 1, 96, 0, 96, 42, Vector2.Zero, 0);
             this.type = type;
 
             Game1.AllObjects.Add(this);
@@ -35,18 +32,22 @@ namespace SpriteExample
             switch (type.ToLower())
             {
                 case "e1":
+                     CreateAnimation("EnemyOne", 2, 0, 0, 32, 32, Vector2.Zero, 1);
                      CurrentAnimation = "EnemyOne";
                      this.pointValue = 40;
                         break;
                 case "e2":
+                     CreateAnimation("EnemyTwo", 2, 32, 0, 44, 32, Vector2.Zero, 1);
                      CurrentAnimation = "EnemyTwo";
                      this.pointValue = 20;
                         break;
                 case "e3":
+                     CreateAnimation("EnemyThree", 2, 64, 0, 48, 32, Vector2.Zero, 1);
                      CurrentAnimation = "EnemyThree";
                      this.pointValue = 10;
                         break;
                 case "ufo":
+                     CreateAnimation("UFO", 1, 96, 0, 96, 42, Vector2.Zero, 0);
                      CurrentAnimation = "UFO";
                      this.pointValue = 200;
                         break;
@@ -83,12 +84,14 @@ namespace SpriteExample
         {
             if(other is Laser && (other as Laser).Direction == Orientation.UP)
             {
-                Destroy(this);
-
                 if(other is Laser)
                 {
                     Destroy(other);
+                    Player.Instance.Score += this.pointValue;
                 }
+
+
+                Destroy(this);
             }
         }
         public void Attack()
