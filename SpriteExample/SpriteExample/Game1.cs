@@ -16,7 +16,7 @@ namespace SpriteExample
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        int attackTimer;
         Text scoreText;
         public static ISoundEngine soundEngine;
         private EnemyFormation formation;
@@ -57,6 +57,7 @@ namespace SpriteExample
         protected override void Initialize()
         {
             spawnTimer = 0;
+            attackTimer = 0;
             // TODO: Add your initialization logic here
             for (int x = 0; x < 4; x++)
             {
@@ -121,6 +122,13 @@ namespace SpriteExample
         protected override void Update(GameTime gameTime)
         {
             spawnTimer++;
+            attackTimer++;
+
+            if(attackTimer >= 120)
+            {
+                formation.Attack();
+                attackTimer = 0;
+            }
 
             if(spawnTimer > 300)
             {

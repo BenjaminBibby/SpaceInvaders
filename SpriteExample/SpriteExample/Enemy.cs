@@ -104,7 +104,7 @@ namespace SpriteExample
                             movingLeft = true;
                             break;
 	                }
-                    this.speed = 5;
+                    this.speed = 3;
                     CreateAnimation("UFO", 1, 96, 0, 96, 42, Vector2.Zero, 0);
                     CurrentAnimation = "UFO";
                     this.pointValue = 200;
