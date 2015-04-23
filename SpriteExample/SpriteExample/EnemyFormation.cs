@@ -15,7 +15,13 @@ namespace SpriteExample
         private int width, height;
         private Vector2 offset;
         private float spaceBetween;
-        private Enemy[, ] enemies;
+        private static Enemy[,] enemies;
+
+        public static Enemy[,] Enemies
+        {
+            get { return EnemyFormation.enemies; }
+            set { EnemyFormation.enemies = value; }
+        }
         private float speed;
 
         public EnemyFormation(int width, int height, Vector2 offset, float spaceBetween, float speed)
@@ -31,7 +37,7 @@ namespace SpriteExample
         public void CreateFormation(int width, int height, Vector2 offset, float spaceBetween)
         {
             enemies = new Enemy[width, height];
-            // The enemyy formation
+            // The enemy formation
             string eType = "e1";
             for (int y = 0; y < height; y++)
             {
@@ -150,6 +156,7 @@ namespace SpriteExample
                 speed = -1 * speed;
                 foreach(Enemy e in enemies)
                 {
+                    if(e != null)
                     e.Position += new Vector2(0, e.CollisionRect.Height);
                 }
             }

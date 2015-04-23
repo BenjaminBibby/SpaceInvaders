@@ -157,6 +157,20 @@ namespace SpriteExample
         public void Destroy(SpriteObject sprObj)
         {
             Game1.AllObjects.Remove(sprObj);
+            //sprObj = null;
+            if(sprObj is Enemy)
+            {
+                for(int y = 0; y < EnemyFormation.Enemies.GetLength(1); y++)
+                {
+                    for(int x = 0; x < EnemyFormation.Enemies.GetLength(0); x++)
+                    {
+                        if(EnemyFormation.Enemies[x, y] == sprObj)
+                        {
+                            EnemyFormation.Enemies[x, y] = null;
+                        }
+                    }
+                }
+            }
         }
 
         protected abstract void AnimationRestart();
