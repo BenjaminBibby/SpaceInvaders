@@ -18,6 +18,11 @@ namespace SpriteExample
         private Orientation direction;
         private bool hasCollided = false;
 
+        public bool HasCollided
+        {
+            get { return hasCollided; }
+        }
+
         public Orientation Direction
         {
             get { return direction; }

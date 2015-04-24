@@ -15,18 +15,35 @@ namespace SpriteExample
         SpriteFont font1;
         Vector2 position;
         string fontOutput;
+        float duration;
+        bool noDuration;
 
+        /// <summary>
+        /// Set duration = 0, for no duration (the object will stay in the game until manually removed).
+        /// Otherwise the duration will be converted to seconds.
+        /// </summary>
         public string FontOutput
         {
             get { return fontOutput; }
             set { fontOutput = value; }
         }
         Color fontColor;
-        public Text(Vector2 position, string fontOutput, Color fontColor)
+        public Text(Vector2 position, string fontOutput, Color fontColor, float duration)
             : base(position)
         {
             CreateAnimation("FontImage",1,0,0,5,5, Vector2.Zero, 0);
             CurrentAnimation = "FontImage";
+
+            if(duration != 0)
+            {
+                noDuration = false;
+                this.duration = duration * 60;
+            }
+            else
+            {
+                noDuration = true;
+            }
+
             this.fontColor = fontColor;
             this.fontOutput = fontOutput;
             this.position = position;
@@ -41,7 +58,16 @@ namespace SpriteExample
             base.LoadContent(content);
         }
         public override void Update(GameTime gameTime)
-        {
+        { 
+            if(duration > 0)
+            {
+                duration--;
+                if(duration == 0 && !noDuration)
+                {
+                    Destroy(this);
+                }
+            }
+
             base.Update(gameTime);
         }
         public override void Draw(SpriteBatch spriteBatch)

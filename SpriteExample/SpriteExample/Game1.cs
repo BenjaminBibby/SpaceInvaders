@@ -17,6 +17,8 @@ namespace SpriteExample
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         int attackTimer;
+        private int numOfEnemies = 0;
+        private bool roundOver;
         Text scoreText;
         public static ISoundEngine soundEngine;
         private EnemyFormation formation;
@@ -56,6 +58,7 @@ namespace SpriteExample
         /// </summary>
         protected override void Initialize()
         {
+            roundOver = false;
             spawnTimer = 0;
             attackTimer = 0;
             // TODO: Add your initialization logic here
@@ -73,18 +76,22 @@ namespace SpriteExample
                 }
             }
 
+            scoreText = new Text(new Vector2(195, 30), "" + Player.Instance.Score.ToString(), new Color(76, 255, 0),0);
+            new Text(new Vector2(80, 30), "SCORE", Color.White,0);
+            new Text(new Vector2(500, 30), "LIVES", Color.White,0);
             Player player = Player.Instance;
             lives = Content.Load<Texture2D>("SpaceInvader");
 
-            formation = new EnemyFormation(8, 5, new Vector2(50, 50), 10f, 2f);
+            formation = new EnemyFormation(8, 5, new Vector2(50, 50), 10f, 1f);
 
-                /*for (int i = 0; i < 6; i++)
-                {
-                    new Shield(new Vector2(50 + i * 32), i);
-                }*/
-                //tmpObjects = allObjects;
 
-                base.Initialize();
+            foreach (SpriteObject enemy in allObjects)
+            {
+                if(enemy is Enemy)
+                numOfEnemies++;
+            }
+            
+            base.Initialize();
         }
 
         /// <summary>
@@ -130,6 +137,20 @@ namespace SpriteExample
                 attackTimer = 0;
             }
 
+            numOfEnemies = 0;
+
+            foreach(SpriteObject enemy in allObjects)
+            {
+                if(enemy is Enemy)
+                numOfEnemies++;
+            }
+            
+            if (numOfEnemies <= 0)
+            {
+                formation = new EnemyFormation(8, 5, new Vector2(50, 50), 10f, 1f);
+                Player.Instance.Lives++;
+            }
+
             if(spawnTimer > 300)
             {
                 spawnTimer = 0;
@@ -139,6 +160,8 @@ namespace SpriteExample
                     new Enemy(Vector2.Zero, "ufo");
                 }
             }
+
+            scoreText.FontOutput = "" + Player.Instance.Score.ToString();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -153,14 +176,6 @@ namespace SpriteExample
                 }
                 LoadContent();
             }
-            /*foreach(SpriteObject obj in allObjects)
-            {
-                if(!tmpObjects.Contains(obj))
-                {
-                    tmpObjects.Add(obj);
-                    LoadContent();
-                }
-            }*/
 
             // TODO: Add your update logic here
             foreach(SpriteObject obj in tmpObjects)

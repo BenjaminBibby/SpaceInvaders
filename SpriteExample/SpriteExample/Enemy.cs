@@ -96,11 +96,11 @@ namespace SpriteExample
                     switch (rndSpawn.Next(2))
 	                {
                         case 0:
-                            this.Position = new Vector2(-50, 20);
+                            this.Position = new Vector2(-50, 40);
                             movingLeft = false;
                             break;
                         case 1:
-                            this.Position = new Vector2(675, 20);
+                            this.Position = new Vector2(675, 40);
                             movingLeft = true;
                             break;
 	                }
@@ -122,13 +122,18 @@ namespace SpriteExample
         protected override void OnCollision(SpriteObject other)
         {
             //If the enemy collides with a laser object that was created by the player (direction is UP)
-            if(other is Laser && (other as Laser).Direction == Orientation.UP)
+            if (other is Laser && (other as Laser).Direction == Orientation.UP && other.CollisionRect.Width < 20)
             {
+       
                 Destroy(other);
                 Game1.soundEngine.Play2D(@"Content\invaderkilled.wav", false);
                 Player.Instance.Score += this.pointValue;
-
                 Destroy(this);
+
+                if (this.type == "ufo")
+                {
+                    new Text(this.Position, this.pointValue.ToString(), Color.White, 0.5f);
+                }
             }
         }
         public void Attack()
