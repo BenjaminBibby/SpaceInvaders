@@ -86,6 +86,7 @@ namespace SpriteExample
             {
                 if(other is Laser)
                 {
+                    Game1.soundEngine.Play2D(@"Content\invaderkilled.wav", false);
                     Destroy(other);
                     Player.Instance.Score += this.pointValue;
                 }

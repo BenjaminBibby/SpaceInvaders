@@ -12,12 +12,13 @@ using IrrKlang;
 
 namespace SpriteExample
 {
-
     class Player : SpriteObject
     {
+        private bool alive;
         private int lives = 3;
         private int timer = 0;
         private int score = 0;
+
         public int Score
         {
             get { return score; }
@@ -51,6 +52,7 @@ namespace SpriteExample
         private Player(Vector2 position)
             : base(position)
         {
+            alive = true;
             this.Position = new Vector2(400 - (52 * 0.5f) , 625);
             this.speed = 250;
             Game1.AllObjects.Add(this);
@@ -71,12 +73,23 @@ namespace SpriteExample
         {
             timer++;
 
+            if(!alive && timer >= 50)
+            {
+                alive = true;
+                CurrentAnimation = "Player";
+            }
+
             if(CurrentAnimation != "Explode")
-            CurrentAnimation = "Player";
+            {
+                CurrentAnimation = "Player";
+            }
 
             velocity = Vector2.Zero;
 
-            HandleInput(Keyboard.GetState());
+            if(alive)
+            {
+                HandleInput(Keyboard.GetState());
+            }
 
             velocity *= speed;
 
@@ -93,15 +106,16 @@ namespace SpriteExample
                 {
                     velocity += new Vector2(-1, 0);
                 }
+                
                 if (keyState.IsKeyDown(Keys.D) && (this.Position.X + this.CollisionRect.Width) < GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width)
                 {
                     velocity += new Vector2(1, 0);
                 }
+
                 if (keyState.IsKeyDown(Keys.Space) && timer >= 30)
                 {
                     new Laser(Orientation.UP, "LaserSheet", new Vector2(this.Position.X + (this.CollisionRect.Width / 2) - 6, this.Position.Y - 10));
-                    Game1.soundEngine.Play2D(@"Content\Attack.wav", false);
-                    this.CurrentAnimation = "Explode";
+                    Game1.soundEngine.Play2D(@"Content\Shoot.wav", false);
                     timer = 0;
                 }
         }
@@ -117,13 +131,15 @@ namespace SpriteExample
 
         protected override void OnCollision(SpriteObject other)
         {
-
             if (other is Laser)
             {
                 if((other as Laser).Direction == Orientation.DOWN)
                 {
                     Destroy(other);
+                    alive = false;
                     this.lives--;
+                    Game1.soundEngine.Play2D(@"Content\explosion.wav", false);
+                    CurrentAnimation = "Explode";
                 }        
             }
         }

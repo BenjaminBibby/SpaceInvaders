@@ -12,6 +12,7 @@ namespace SpriteExample
 {
     abstract class SpriteObject
     {
+        #region fields
         private Vector2 origin;
         private float layer;
         protected Color color;
@@ -31,6 +32,7 @@ namespace SpriteExample
         protected Vector2 velocity;
         protected float speed;
         private string currentAnimation;
+#endregion
         protected Rectangle[] Rectangles
         {
             get { return rectangles; }
