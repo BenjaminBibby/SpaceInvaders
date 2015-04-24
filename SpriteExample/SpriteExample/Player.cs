@@ -83,6 +83,19 @@ namespace SpriteExample
             {
                 CurrentAnimation = "Player";
             }
+            if(timer >= 60)
+            {
+                alive = true;
+            }
+
+            if(alive)
+            {
+                CurrentAnimation = "Player";
+            }
+            else
+            {
+                CurrentAnimation = "Explode";
+            }
 
             velocity = Vector2.Zero;
 
@@ -90,6 +103,7 @@ namespace SpriteExample
             {
                 HandleInput(Keyboard.GetState());
             }
+            HandleInput(Keyboard.GetState());
 
             velocity *= speed;
 
@@ -116,6 +130,7 @@ namespace SpriteExample
                 {
                     new Laser(Orientation.UP, "LaserSheet", new Vector2(this.Position.X + (this.CollisionRect.Width / 2) - 6, this.Position.Y - 10));
                     Game1.soundEngine.Play2D(@"Content\Shoot.wav", false);
+                    Game1.soundEngine.Play2D(@"Content\shoot.wav", false);
                     timer = 0;
                 }
         }
@@ -137,6 +152,10 @@ namespace SpriteExample
                 {
                     Destroy(other);
                     alive = false;
+                    this.CurrentAnimation = "Explode";
+                    Game1.soundEngine.Play2D(@"Content\explosion.wav", false);
+                    alive = false;
+                    timer = 0;                    
                     this.lives--;
                     Game1.soundEngine.Play2D(@"Content\explosion.wav", false);
                     CurrentAnimation = "Explode";

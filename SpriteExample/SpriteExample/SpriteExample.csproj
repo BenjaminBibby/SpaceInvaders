@@ -37,6 +37,7 @@
   <ItemGroup>
     <Compile Include="Animation.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="EnemyFormation.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Laser.cs" />
     <Compile Include="Player.cs" />
@@ -47,7 +48,8 @@
     <Compile Include="Text.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="irrKlang.NET4">
+    <Reference Include="irrKlang.NET4, Version=1.0.5235.17346, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Windows\Debug\irrKlang.NET4.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework">
@@ -58,16 +60,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="black.ico" />
-    <Content Include="Content\Attack.wav">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\CollisionTexture.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\EnemySheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\EnemySpriteSheet.png">
+    <Content Include="Content\explosion.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\explosion.wav">
@@ -91,9 +90,6 @@
     <Content Include="Content\playerSheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\SheetShield.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\SheetShieldNew.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -103,7 +99,7 @@
     <Content Include="Content\SpaceInvader.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\sponge.png">
+    <Content Include="Content\SpaceInvader.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
@@ -112,6 +108,9 @@
     <None Include="Content\RetroComputer.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

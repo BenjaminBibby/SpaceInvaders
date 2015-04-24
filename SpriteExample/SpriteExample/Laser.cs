@@ -18,6 +18,11 @@ namespace SpriteExample
         private Orientation direction;
         private bool hasCollided = false;
 
+        public bool HasCollided
+        {
+            get { return hasCollided; }
+        }
+
         public Orientation Direction
         {
             get { return direction; }
@@ -30,7 +35,7 @@ namespace SpriteExample
         {
             this.direction = direction;
             this.imgPath = imagePath;
-            this.speed = 10;
+            this.speed = 15;
             hasCollided = false;
             CreateAnimation("Laser", 1, 0, 0, 12, 23, Vector2.Zero, 0);
             CreateAnimation("Explosion", 1, 23, 0, 50, 31, new Vector2(25, 15), 0);
@@ -82,9 +87,8 @@ namespace SpriteExample
 
         protected override void OnCollision(SpriteObject other)
         {
-            if (other is Enemy || other is Shield)
+            if (other is Enemy || other is Shield && this.direction == Orientation.UP)
             {
-                this.speed = 0;
                 hasCollided = true;
             }
         }

@@ -16,8 +16,14 @@ namespace SpriteExample
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        int attackTimer;
+        private int numOfEnemies = 0;
+        private bool roundOver;
         Text scoreText;
         public static ISoundEngine soundEngine;
+        private EnemyFormation formation;
+        private int spawnTimer;
+
         private static List<SpriteObject> tmpObjects = new List<SpriteObject>();
         internal static List<SpriteObject> TmpObjects
         {
@@ -32,8 +38,6 @@ namespace SpriteExample
             get { return allObjects; }
             set { allObjects = value; }
         }
-
-        private Enemy[,] enemyFormation = new Enemy[8, 5];
 
         public Game1()
             : base()
@@ -54,6 +58,9 @@ namespace SpriteExample
         /// </summary>
         protected override void Initialize()
         {
+            roundOver = false;
+            spawnTimer = 0;
+            attackTimer = 0;
             // TODO: Add your initialization logic here
             for (int x = 0; x < 4; x++)
             {
@@ -68,37 +75,23 @@ namespace SpriteExample
                     }
                 }
             }
-            scoreText = new Text(new Vector2(195, 30), "" + Player.Instance.Score.ToString(),  new Color(76, 255,0));
-            new Text(new Vector2(80, 30), "SCORE", Color.White);
-            new Text(new Vector2(500, 30), "LIVES", Color.White);
+
+            scoreText = new Text(new Vector2(195, 30), "" + Player.Instance.Score.ToString(), new Color(76, 255, 0),0);
+            new Text(new Vector2(80, 30), "SCORE", Color.White,0);
+            new Text(new Vector2(500, 30), "LIVES", Color.White,0);
             Player player = Player.Instance;
             lives = Content.Load<Texture2D>("SpaceInvader");
 
-            // The enemyy formation
-            string eType = "e1";
-            for (int y = 0; y < 5; y++ )
+            formation = new EnemyFormation(8, 5, new Vector2(50, 50), 10f, 1f);
+
+
+            foreach (SpriteObject enemy in allObjects)
             {
-                if(y > 2)
-                {
-                    eType = "e2";
-                }
-                else if(y > 3)
-                {
-                    eType = "e3";
-                }
-                for(int x = 0; x < 8; x++)
-                {
-                    enemyFormation[x, y] = new Enemy(new Vector2(0 + 50 * x, 0 + 50 * (y+1)), eType);
-                }
+                if(enemy is Enemy)
+                numOfEnemies++;
             }
-
-                /*for (int i = 0; i < 6; i++)
-                {
-                    new Shield(new Vector2(50 + i * 32), i);
-                }*/
-                //tmpObjects = allObjects;
-
-                base.Initialize();
+            
+            base.Initialize();
         }
 
         /// <summary>
@@ -135,9 +128,40 @@ namespace SpriteExample
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-             //new Text(new Vector2(175, 25), "" + Player.Instance.Score.ToString(), Color.White);
-            scoreText.FontOutput = "" + Player.Instance.Score.ToString();
+            spawnTimer++;
+            attackTimer++;
 
+            if(attackTimer >= 120)
+            {
+                formation.Attack();
+                attackTimer = 0;
+            }
+
+            numOfEnemies = 0;
+
+            foreach(SpriteObject enemy in allObjects)
+            {
+                if(enemy is Enemy)
+                numOfEnemies++;
+            }
+            
+            if (numOfEnemies <= 0)
+            {
+                formation = new EnemyFormation(8, 5, new Vector2(50, 50), 10f, 1f);
+                Player.Instance.Lives++;
+            }
+
+            if(spawnTimer > 300)
+            {
+                spawnTimer = 0;
+                Random ufoSpawn = new Random(Guid.NewGuid().GetHashCode());
+                if (ufoSpawn.Next(3) == 1)
+                {
+                    new Enemy(Vector2.Zero, "ufo");
+                }
+            }
+
+            scoreText.FontOutput = "" + Player.Instance.Score.ToString();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -152,21 +176,15 @@ namespace SpriteExample
                 }
                 LoadContent();
             }
-            /*foreach(SpriteObject obj in allObjects)
-            {
-                if(!tmpObjects.Contains(obj))
-                {
-                    tmpObjects.Add(obj);
-                    LoadContent();
-                }
-            }*/
 
             // TODO: Add your update logic here
             foreach(SpriteObject obj in tmpObjects)
             {
                 obj.Update(gameTime);
             }
-            
+
+            formation.MoveFormation();
+
             base.Update(gameTime);
         }
 
