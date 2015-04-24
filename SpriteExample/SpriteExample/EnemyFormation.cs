@@ -64,6 +64,7 @@ namespace SpriteExample
             float[] rows = new float[height];
             for(int y = 0; y < height; y++)
             {
+                rows[y] = 400f;
                 for(int x = 0; x < width; x++)
                 {
                     if(enemies[x, y] != null)
@@ -84,13 +85,7 @@ namespace SpriteExample
             float[] rows = new float[height];
             for(int y = 0; y < height; y++)
             {
-                /*for(int x = 0; x < width; x++)
-                {
-                    if(enemies[x, y] != null)
-                    {
-                        rows[y] = enemies[x, y].Position.X + enemies[x, y].CollisionRect.Width;
-                    }
-                }*/
+                rows[y] = 400f;
                 for(int x = width - 1; x >= 0; x--)
                 {
                     if(enemies[x, y] != null)
@@ -100,15 +95,6 @@ namespace SpriteExample
                     }
                 }
             }
-            /*float largest = rows[0];
-            for (int i = 0; i < rows.Length; i++)
-            {
-               if(rows[i] > largest)
-               {
-                   largest = rows[i];
-               }
-            }
-            return largest;*/
             return rows.Max();
                 
         }
@@ -121,6 +107,7 @@ namespace SpriteExample
             float[] rows = new float[width];
             for (int x = 0; x < width; x++)
             {
+                rows[x] = 400;
                 for (int y = height - 1; y > 0; y--)
                 {
                     if (enemies[x, y] != null)
@@ -153,11 +140,13 @@ namespace SpriteExample
         {
             if (GetWidthOfFormation() >= 800 || GetStartOfRow() <= 0)
             {
-                speed = -1 * speed;
-                foreach(Enemy e in enemies)
+                speed = (-1) * speed;
+                foreach (Enemy e in enemies)
                 {
-                    if(e != null)
-                    e.Position += new Vector2(0, e.CollisionRect.Height);
+                    if (e != null)
+                    {
+                        e.Position += new Vector2(0, e.CollisionRect.Height);
+                    }
                 }
             }
             for (int y = 0; y < height; y++) 
